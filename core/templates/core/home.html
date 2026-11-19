@@ -1,0 +1,24 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1>Gallery</h1>
+
+<div class="grid">
+  {% for item in items %}
+    <div class="card">
+      <h3>{{ item.title }}</h3>
+      {% if item.media_type == 'image' %}
+        <img src="{{ item.file.url }}" alt="{{ item.title }}">
+      {% elif item.media_type == 'video' %}
+        <video src="{{ item.file.url }}" controls></video>
+      {% else %}
+        <audio src="{{ item.file.url }}" controls></audio>
+      {% endif %}
+    </div>
+  {% empty %}
+    <p>Nothing here yet. <a href="{% url 'upload' %}">Upload something.</a></p>
+  {% endfor %}
+</div>
+{% endblock %}
